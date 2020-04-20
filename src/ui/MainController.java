@@ -13,7 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -38,11 +37,6 @@ public class MainController implements Initializable {
 
     @FXML
     private Label error;
-
-    @FXML
-    private NumberAxis xAxis;
-    @FXML
-    private NumberAxis yAxis;
 
     @FXML
     private LineChart<Double, Double> chart;
@@ -203,31 +197,27 @@ public class MainController implements Initializable {
         try {
             mathGraph.clear();
 
-            drawFunction();
-            drawPoints();
-
             if (result.isVisible()) {
-                drawResultFunction();
+                double left = Math.min(getLeftBound(), getResultXCoord());
+                double right = Math.max(getResultXCoord(), getRightBound());
+                drawFunction(left, right);
+                drawPoints();
+                drawResultFunction(left, right);
                 drawResultPoint();
+            } else {
+                drawFunction(getLeftBound(), getRightBound());
+                drawPoints();
             }
-
-//            xAxis.setAutoRanging(false);
-//            yAxis.setAutoRanging(true);
-//
-//            double step = (getRightBound() - getLeftBound()) / 10;
-//            xAxis.setLowerBound(getLeftBound() - step);
-//            xAxis.setUpperBound(getRightBound() + step);
-//            xAxis.setTickUnit(step);
         } catch (Exception e) {
             error.setText(e.getMessage());
         }
     }
 
-    private void drawFunction() throws InvalidValueException, UnavailableCodeException, NotAllowedScopeException {
+    private void drawFunction(double left, double right) throws UnavailableCodeException, NotAllowedScopeException {
         mathGraph.plotLine(
                 intFunction.getValue(),
-                getLeftBound(),
-                getRightBound()
+                left,
+                right
         );
     }
 
@@ -235,11 +225,11 @@ public class MainController implements Initializable {
         mathGraph.plotLine(intPoints.getItems());
     }
 
-    private void drawResultFunction() throws InvalidValueException, UnavailableCodeException, NotAllowedScopeException {
+    private void drawResultFunction(double left, double right) throws UnavailableCodeException, NotAllowedScopeException {
         mathGraph.plotLine(
                 resultFunction,
-                getLeftBound(),
-                getRightBound()
+                left,
+                right
         );
     }
 
@@ -302,7 +292,7 @@ public class MainController implements Initializable {
                 });
 
         intLeftBound.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("-?\\d{0,7}([.]\\d{0,4})?")) {
+            if (!newValue.matches("-?\\d{0,2}([.]\\d{0,4})?")) {
                 intLeftBound.setText(oldValue);
             } else {
                 generatePoints();
@@ -310,7 +300,7 @@ public class MainController implements Initializable {
         });
 
         intRightBound.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("-?\\d{0,7}([.]\\d{0,4})?")) {
+            if (!newValue.matches("-?\\d{0,2}([.]\\d{0,4})?")) {
                 intRightBound.setText(oldValue);
             } else {
                 generatePoints();
@@ -318,7 +308,7 @@ public class MainController implements Initializable {
         });
 
         intPointCount.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("-?\\d{0,7}")) {
+            if (!newValue.matches("-?\\d{0,2}")) {
                 intPointCount.setText(oldValue);
             } else {
                 generatePoints();
@@ -336,8 +326,8 @@ public class MainController implements Initializable {
                 });
 
         resultXCoord.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("-?\\d{0,7}([.]\\d{0,4})?")) {
-                intPointCount.setText(oldValue);
+            if (!newValue.matches("-?\\d{0,2}([.]\\d{0,4})?")) {
+                resultXCoord.setText(oldValue);
             } else {
                 clearError();
 

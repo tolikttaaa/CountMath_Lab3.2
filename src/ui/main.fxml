@@ -151,10 +151,10 @@
                <children>
                   <LineChart fx:id="chart" alternativeRowFillVisible="false" animated="false" layoutY="10.0" legendVisible="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="755.0" stylesheets="@css/lineChart.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                     <xAxis>
-                      <NumberAxis side="BOTTOM" fx:id="xAxis" />
+                      <NumberAxis side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis fx:id="yAxis" side="LEFT" />
+                      <NumberAxis side="LEFT" />
                     </yAxis>
                   </LineChart>
                </children>
