@@ -1,0 +1,21 @@
+The purpose of this application is to implement interpolation of the equations by various methods.
+
+* You can choose function from the list:
+   1) y = x^3 - x + 4
+   2) y = cos(x)/(x^2 + 1)
+   3) y = sin(x)
+* You can choose method from the list:
+   1) By Lagrange polynomial
+   2) By Newton polynomial (Done)
+   3) By Cubic Spline
+* Also you need to set the bounds of the solution and count of points.
+* After point generation you are able to perform interpolation. Also, you can change the `y` coordinate of each point.
+* When interpolation is ready you can get the value of function in each point what you want.
+
+Plot legend:
+* orange - selected function
+* blue - selected points
+* green - interpolated function
+* red - interpolated function point
+
+Implemented by Anatoliy Anischenko
